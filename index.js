@@ -18,6 +18,13 @@ const PRIVATE_APP_ACCESS = '';
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
 // * Code for Route 2 goes here
+app.get('/update-pets', async (req, res) => {
+    try {
+        res.render('updates', { pageTitle: 'Update Custom Object Form | Integrating with HubSpot I Practicum' });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
