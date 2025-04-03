@@ -1,21 +1,21 @@
 doctype html
 html
     head 
-        title= pageTitle
+        title Homepage
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body
-        h1 Homepage
+        h1 Custom Object Table
+        a(href="/update-pets") Add to this table
         table 
             thead 
                 tr
                     th Name
                     th Breed
-                    th Weight
+                    th Weight (lbs)
             tbody
                 each pet in pets
                     tr
-                        td #{pet.name}
-                        td #{pet.breed}
-                        td #{pet.weight}
-        a(href="/update-pets") View Updates
+                        td= pet.properties.name
+                        td= pet.properties.breed
+                        td= pet.properties.weight

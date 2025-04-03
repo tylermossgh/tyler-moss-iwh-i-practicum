@@ -6,13 +6,13 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body
         h1 Updates
-        div.form-container
+        div.form-wrapper
             form(action="/update-pets", method="POST")
                 label(for="name") Name:
                 input(type="text", name="name", required)
                 label(for="breed") Breed:
                 input(type="text", name="breed")
-                label(for="weight") Weight:
+                label(for="weight") Weight (lbs):
                 input(type="number", name="weight")
                 button(type="submit") Add New Pet
         a(href="/") Back to Homepage
