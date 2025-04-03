@@ -13,6 +13,24 @@ const PRIVATE_APP_ACCESS = '';
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 // * Code for Route 1 goes here
+app.get('/homepage-pets', async (req, res) => {
+    const petsEndpoint = "https://api.hubspot.com/crm/v3/objects/pets";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        "Content-Type": "application/json",
+    };
+    const params = {
+        properties: ["name", "breed", "weight"]
+    }
+    try {
+        const response = await axios.get(petsEndpoint, { headers, params });
+        console.log('Response data:', JSON.stringify(response.data, null, 2));
+        const data = response.data.results;
+        res.render('homepage', { pets: data });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
@@ -29,6 +47,32 @@ app.get('/update-pets', async (req, res) => {
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 // * Code for Route 3 goes here
+app.post('/update-pets', async (req, res) => {
+    const petsEndpoint = 'https://api.hubspot.com/crm/v3/objects/pets';
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    };
+
+    const data = {
+        properties: {
+            name: req.body.name,
+            breed: req.body.breed,
+            weight: req.body.weight,
+        }
+    };
+
+    try {
+        const response = await axios.post(petsEndpoint, data, { headers });
+        console.log('Response data:', JSON.stringify(response.data, null, 2));
+        res.redirect('/homepage-pets');
+    } catch(err) {
+        console.error(err);
+    }
+});
+
+// * Localhost
+app.listen(3000, () => console.log('Listening on http://localhost:3000'));
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 
@@ -73,7 +117,3 @@ app.post('/update', async (req, res) => {
 
 });
 */
-
-
-// * Localhost
-app.listen(3000, () => console.log('Listening on http://localhost:3000'));
